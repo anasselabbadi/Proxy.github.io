@@ -9,9 +9,24 @@
 <body>
     <div class="container">
         <h1>GitHub Page Viewer</h1>
+        
         <div class="url-input-section">
             <input type="url" id="urlInput" placeholder="Enter URL (e.g., https://example.com)" autocomplete="off">
             <button id="viewBtn">View Page</button>
+            <button id="newTabBtn" title="Open in new tab">↗</button>
+        </div>
+
+        <div class="controls">
+            <button id="backBtn" disabled>← Back</button>
+            <button id="forwardBtn" disabled>→ Forward</button>
+            <button id="refreshBtn" disabled>↻ Refresh</button>
+            <select id="proxySelector">
+                <option value="direct">Direct (Try First)</option>
+                <option value="corsproxy">CORS Proxy</option>
+                <option value="allorigins">AllOrigins</option>
+                <option value="corsanywhere">CORS Anywhere</option>
+            </select>
+            <button id="toggleReaderBtn">📖 Reader Mode</button>
         </div>
         
         <div id="loading" class="hidden">
@@ -21,22 +36,45 @@
 
         <div id="error" class="error hidden">
             <p id="errorMessage"></p>
-            <button id="tryProxyBtn" class="hidden">Try with Proxy</button>
+            <div class="error-actions">
+                <button id="tryProxyBtn" class="hidden">Try with Proxy</button>
+                <button id="tryDifferentBtn">Try Different Method</button>
+            </div>
+        </div>
+
+        <div id="browserInfo" class="browser-info hidden">
+            <span id="currentMethod"></span>
+            <span id="currentUrl"></span>
+            <span id="securityStatus"></span>
         </div>
 
         <div id="contentArea" class="hidden">
-            <div class="viewer-controls">
-                <button id="backBtn">← Back</button>
-                <span id="currentUrl"></span>
-            </div>
             <div id="viewerContainer">
-                <iframe id="directFrame" class="hidden" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
-                <iframe id="proxyFrame" class="hidden" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+                <iframe id="mainFrame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"></iframe>
+            </div>
+        </div>
+
+        <div id="readerView" class="reader-view hidden">
+            <div class="reader-header">
+                <h2 id="readerTitle"></h2>
+                <button id="closeReaderBtn">Close Reader</button>
+            </div>
+            <div id="readerContent"></div>
+        </div>
+
+        <div class="quick-links">
+            <h3>Quick Test Links:</h3>
+            <div class="link-buttons">
+                <button data-url="https://example.com">Example.com</button>
+                <button data-url="https://httpbin.org/html">HTTPBin</button>
+                <button data-url="https://www.wikipedia.org">Wikipedia</button>
+                <button data-url="https://text.npr.org">NPR Text</button>
+                <button data-url="https://www.w3.org">W3C</button>
             </div>
         </div>
 
         <div id="info" class="info">
-            <p>Enter any URL to view it through this GitHub Pages viewer</p>
+            <p>Enter any URL to view it through this GitHub Pages viewer. Some sites may not work due to security restrictions.</p>
         </div>
     </div>
 
